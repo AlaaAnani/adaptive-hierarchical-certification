@@ -11,3 +11,11 @@ yacs>=0.1.5
 tensorboardX>=1.6
 tqdm
 ninja
+path
+statsmodels
+tensorboard
+future
+configargparse
+plotly
+two-sample-binomial
+stats

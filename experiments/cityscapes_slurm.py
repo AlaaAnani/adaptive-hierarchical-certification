@@ -324,7 +324,6 @@ class Certifier:
         if do_tqdm: pbar = tqdm(total=n)
         with torch.no_grad():
             while (remaining) > 0:
-                print('remaining:', remaining)
                 cnt = min(remaining, BS)
                 pred = self.test_dataset.multi_scale_inference_noisybatch(
                             self.model, 
@@ -346,9 +345,9 @@ class Certifier:
                 remaining -= cnt
                 if do_tqdm: pbar.update(cnt)
         if do_tqdm: pbar.close()
-        print('before concatenate')
         if posteriors:
-            return np.concatenate(out), np.concatenate(out_pred)
+            out = np.concatenate(out); out_pred = np.concatenate(out_pred)
+            return out, out_pred
         print('after concatenate')
         print('end of sample')
 
@@ -806,7 +805,7 @@ class Certifier:
 
                 #for n in list(reversed(sorted(self.n))):
                 #  
-                for n in tqdm(list(reversed(sorted([100, 200, 300, 400, 500]))), desc=f'{name}'):
+                for n in tqdm(list(reversed(sorted([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]))), desc=f'{name}'):
                     if samples_logits is None:
                         print('before get_samples')
                         samples_logits = self.get_samples(image_np01, n, size, name)
@@ -818,11 +817,8 @@ class Certifier:
                     else:
                         samples, samples_logits = samples[0:n], samples_logits[0:n]
 
-                    print('before samples.reshape(n, -1).copy()')
                     samples_flattened = samples.reshape(n, -1).copy() # (N, w*h)
-                    print('before to_hierarchies')
                     samples_flattened_h = self.to_hierarchies(torch.tensor(samples_flattened).clone().unsqueeze(0).detach())
-                    print('after to_hierarchies')
 
                     # run experiment per n
                     stats_dir, stats = self.exp_best_threshold_function(name, stats,
@@ -849,7 +845,7 @@ class Certifier:
         n0=20; N0=n0
         i = 0
         # SegCertify at different hierarchies
-        for s_i, label_i in tqdm(zip(samples_flattened_h, labels_h)):
+        for s_i, label_i in tqdm(zip(samples_flattened_h, labels_h), desc='SegCertify'):
             classes_certify = self.fast_certify(s_i, n0, n)
             
             label_i = label_i.flatten()
@@ -962,10 +958,10 @@ class Certifier:
     
 if __name__ == '__main__':
     world_size = torch.cuda.device_count()
-    remote = True
+    remote = False
     parser = ArgumentParser()
-    parser.add_argument("--jobid", default=2)
-    parser.add_argument("--numjobs", default=10)
+    parser.add_argument("--jobid", default=1)
+    parser.add_argument("--numjobs", default=1)
 
     args, _ = parser.parse_known_args()
     print(args.jobid)
