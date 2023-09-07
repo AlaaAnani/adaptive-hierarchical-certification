@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 
-code/hrnet_seg/data/cityscapes/*
+data/cityscapes/*
 __pycache__/
 *.py[cod]
 *$py.class
