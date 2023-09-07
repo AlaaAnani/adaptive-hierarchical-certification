@@ -1,0 +1,9 @@
+args.g 100
+echo ${CUDA_VISIBLE_DEVICES}
+os.system 0
+
+Device count 1
+Initializing 0/1, jobid=0
+Testing 1000 samples
+after creating the samples (8000, 2097152, 19)
+Done 0

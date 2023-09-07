@@ -1,0 +1,22 @@
+scontrol show partition cpu20
+-p <partition>
+Specifies in which partition the job should run. Multiple partitions can be specified in a comma separated list. The current default is: cpu20
+
+-t <time>
+Maximum runtime of the job. If this time is exceeded the job is killed. Acceptable <time> formats include “minutes”, “minutes:seconds”, “hours:minutes:seconds”, “days-hours”, “days-hours:minutes” and “days-hours:minutes:seconds” (example: 1-12:00:00 will request 1 day and 12 hours).
+
+-o <file>
+Store the job output in “file” (otherwise written to slurm-<jobid>). %j in the filename stands for the jobid. You can use /dev/null if you do not need the output.
+
+-e <file>
+Store the job error output in “file” (otherwise written to the output file)
+
+--noinfo
+Some metainformation about your job will be added to your output file. If you do not want that, you can suppress it with this flag.
+Resource Selection
+
+-c <cpus per task>
+The number of cpus per tasks. The default is one cpu per task.
+
+--mem-per-cpu=<size[units]>
+Required memory per task. The Unit can be one of [K|M|G|T], but defaults to M. If your processes exceed this limit, they will be killed. You can get the default memory per task by looking at the DefMemPerCPU metric as reported by scontrol show partition cpu20

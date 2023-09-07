@@ -1,0 +1,5 @@
+args.g 100
+echo ${CUDA_VISIBLE_DEVICES}
+os.system 0,1
+
+Device count 2

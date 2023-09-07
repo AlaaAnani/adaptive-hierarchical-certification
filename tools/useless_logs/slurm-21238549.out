@@ -1,0 +1,317 @@
+no change     /home/aanani/anaconda3/condabin/conda
+no change     /home/aanani/anaconda3/bin/conda
+no change     /home/aanani/anaconda3/bin/conda-env
+no change     /home/aanani/anaconda3/bin/activate
+no change     /home/aanani/anaconda3/bin/deactivate
+no change     /home/aanani/anaconda3/etc/profile.d/conda.sh
+no change     /home/aanani/anaconda3/etc/fish/conf.d/conda.fish
+no change     /home/aanani/anaconda3/shell/condabin/Conda.psm1
+no change     /home/aanani/anaconda3/shell/condabin/conda-hook.ps1
+no change     /home/aanani/anaconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /home/aanani/anaconda3/etc/profile.d/conda.csh
+no change     /home/aanani/.bashrc
+No action taken.
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+0
+
+Main Loop:   0%|          | 0/100 [00:00<?, ?it/s]/home/aanani/anaconda3/envs/HrNet/lib/python3.7/site-packages/torch/nn/functional.py:2539: UserWarning: Default upsampling behavior when mode=bilinear is changed to align_corners=False since 0.4.0. Please specify align_corners=True if the old behavior is desired. See the documentation of nn.Upsample for details.
+  "See the documentation of nn.Upsample for details.".format(mode))
+/home/aanani/anaconda3/envs/HrNet/lib/python3.7/site-packages/torch/nn/functional.py:2457: UserWarning: nn.functional.upsample is deprecated. Use nn.functional.interpolate instead.
+  warnings.warn("nn.functional.upsample is deprecated. Use nn.functional.interpolate instead.")
+/BS/mlcysec2/work/robust-segmentation/code/hrnet_seg/tools/cityscapes_slurm.py:416: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  labels_h = self.to_hierarchies(torch.tensor(label).clone().detach().unsqueeze(0)).cpu().squeeze().numpy()
+
+frankfurt_000000_020321:   0%|          | 0/5 [00:00<?, ?it/s][A
+
+  0%|          | 0/500 [00:00<?, ?it/s][A[A
+
+  3%|▎         | 16/500 [00:10<05:22,  1.50it/s][A[A
+
+  6%|▋         | 32/500 [00:17<04:06,  1.90it/s][A[A
+
+ 10%|▉         | 48/500 [00:24<03:37,  2.07it/s][A[A
+
+ 13%|█▎        | 64/500 [00:31<03:21,  2.17it/s][A[A
+
+ 16%|█▌        | 80/500 [00:38<03:08,  2.22it/s][A[A
+
+ 19%|█▉        | 96/500 [00:45<02:59,  2.26it/s][A[A
+
+ 22%|██▏       | 112/500 [00:51<02:50,  2.28it/s][A[A
+
+ 26%|██▌       | 128/500 [00:58<02:42,  2.29it/s][A[A
+
+ 29%|██▉       | 144/500 [01:05<02:34,  2.30it/s][A[A
+
+ 32%|███▏      | 160/500 [01:12<02:27,  2.30it/s][A[A
+
+ 35%|███▌      | 176/500 [01:19<02:20,  2.31it/s][A[A
+
+ 38%|███▊      | 192/500 [01:26<02:13,  2.31it/s][A[A
+
+ 42%|████▏     | 208/500 [01:33<02:05,  2.32it/s][A[A
+
+ 45%|████▍     | 224/500 [01:40<02:00,  2.30it/s][A[A
+
+ 48%|████▊     | 240/500 [01:47<01:53,  2.28it/s][A[A
+
+ 51%|█████     | 256/500 [01:54<01:46,  2.28it/s][A[A
+
+ 54%|█████▍    | 272/500 [02:01<01:39,  2.29it/s][A[A
+
+ 58%|█████▊    | 288/500 [02:08<01:32,  2.28it/s][A[A
+
+ 61%|██████    | 304/500 [02:15<01:25,  2.29it/s][A[A
+
+ 64%|██████▍   | 320/500 [02:22<01:18,  2.30it/s][A[A
+
+ 67%|██████▋   | 336/500 [02:29<01:11,  2.30it/s][A[A
+
+ 70%|███████   | 352/500 [02:36<01:04,  2.30it/s][A[A
+
+ 74%|███████▎  | 368/500 [02:43<00:57,  2.31it/s][A[A
+
+ 77%|███████▋  | 384/500 [02:50<00:50,  2.31it/s][A[A
+
+ 80%|████████  | 400/500 [02:56<00:43,  2.31it/s][A[A
+
+ 83%|████████▎ | 416/500 [03:03<00:36,  2.31it/s][A[A
+
+ 86%|████████▋ | 432/500 [03:10<00:29,  2.32it/s][A[A
+
+ 90%|████████▉ | 448/500 [03:17<00:22,  2.32it/s][A[A
+
+ 93%|█████████▎| 464/500 [03:24<00:15,  2.32it/s][A[A
+
+ 96%|█████████▌| 480/500 [03:31<00:08,  2.32it/s][A[A
+
+ 99%|█████████▉| 496/500 [03:38<00:01,  2.32it/s][A[A
+
+100%|██████████| 500/500 [03:41<00:00,  2.09it/s][A[A100%|██████████| 500/500 [03:41<00:00,  2.25it/s]
+
+
+0it [00:00, ?it/s][A[A
+
+1it [00:05,  5.92s/it][A[A
+
+2it [00:11,  5.89s/it][A[A
+
+3it [00:17,  5.85s/it][A[A
+
+4it [00:23,  5.80s/it][A[A4it [00:23,  5.83s/it]
+
+
+frankfurt_000000_020321 threshold functions::   0%|          | 0/56 [00:00<?, ?it/s][A[A
+
+frankfurt_000000_020321 threshold functions::   2%|▏         | 1/56 [00:46<42:11, 46.02s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   4%|▎         | 2/56 [02:04<58:49, 65.36s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   5%|▌         | 3/56 [03:57<1:16:52, 87.03s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   7%|▋         | 4/56 [06:38<1:40:41, 116.17s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   9%|▉         | 5/56 [10:02<2:05:41, 147.87s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  11%|█         | 6/56 [20:59<4:27:25, 320.92s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  12%|█▎        | 7/56 [22:18<3:17:32, 241.89s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  14%|█▍        | 8/56 [24:11<2:40:40, 200.84s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  16%|█▌        | 9/56 [26:52<2:27:38, 188.49s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  18%|█▊        | 10/56 [30:17<2:28:11, 193.30s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  20%|█▉        | 11/56 [41:12<4:11:09, 334.89s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  21%|██▏       | 12/56 [43:05<3:16:04, 267.38s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  23%|██▎       | 13/56 [45:46<2:48:28, 235.08s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  25%|██▌       | 14/56 [49:11<2:38:04, 225.82s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  27%|██▋       | 15/56 [1:00:06<4:02:43, 355.21s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  29%|██▊       | 16/56 [1:02:47<3:17:58, 296.97s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  30%|███       | 17/56 [1:06:12<2:54:53, 269.06s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  32%|███▏      | 18/56 [1:17:01<4:02:48, 383.37s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  34%|███▍      | 19/56 [1:20:22<3:22:43, 328.74s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  36%|███▌      | 20/56 [1:31:10<4:14:37, 424.36s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  38%|███▊      | 21/56 [1:41:59<4:46:56, 491.91s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  39%|███▉      | 22/56 [1:43:17<3:28:23, 367.74s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  41%|████      | 23/56 [1:45:09<2:39:58, 290.87s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  43%|████▎     | 24/56 [1:47:47<2:13:50, 250.96s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  45%|████▍     | 25/56 [1:51:09<2:02:02, 236.22s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  46%|████▋     | 26/56 [2:01:58<3:00:09, 360.31s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  48%|████▊     | 27/56 [2:03:51<2:18:13, 285.98s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  50%|█████     | 28/56 [2:06:31<1:55:53, 248.32s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  52%|█████▏    | 29/56 [2:09:55<1:45:40, 234.84s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  54%|█████▎    | 30/56 [2:20:48<2:36:06, 360.25s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  55%|█████▌    | 31/56 [2:23:28<2:05:05, 300.20s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  57%|█████▋    | 32/56 [2:26:51<1:48:24, 271.03s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  59%|█████▉    | 33/56 [2:37:42<2:27:40, 385.24s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  61%|██████    | 34/56 [2:41:06<2:01:13, 330.61s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  62%|██████▎   | 35/56 [2:51:57<2:29:25, 426.94s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  64%|██████▍   | 36/56 [3:02:50<2:44:53, 494.65s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  66%|██████▌   | 37/56 [3:04:43<2:00:21, 380.10s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  68%|██████▊   | 38/56 [3:07:23<1:34:12, 314.02s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  70%|██████▉   | 39/56 [3:10:45<1:19:30, 280.64s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  71%|███████▏  | 40/56 [3:21:38<1:44:33, 392.10s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  73%|███████▎  | 41/56 [3:24:18<1:20:38, 322.53s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  75%|███████▌  | 42/56 [3:27:41<1:06:53, 286.69s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  77%|███████▋  | 43/56 [3:38:32<1:25:48, 396.08s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  79%|███████▊  | 44/56 [3:41:55<1:07:37, 338.12s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  80%|████████  | 45/56 [3:52:46<1:19:13, 432.14s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  82%|████████▏ | 46/56 [4:03:38<1:23:00, 498.04s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  84%|████████▍ | 47/56 [4:06:18<59:30, 396.68s/it]  [A[A
+
+frankfurt_000000_020321 threshold functions::  86%|████████▌ | 48/56 [4:09:42<45:09, 338.64s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  88%|████████▊ | 49/56 [4:20:34<50:28, 432.71s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  89%|████████▉ | 50/56 [4:23:56<36:21, 363.63s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  91%|█████████ | 51/56 [4:34:49<37:31, 450.22s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  93%|█████████▎| 52/56 [4:45:41<34:03, 510.96s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  95%|█████████▍| 53/56 [4:49:04<20:55, 418.63s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  96%|█████████▋| 54/56 [4:59:56<16:17, 488.60s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  98%|█████████▊| 55/56 [5:10:49<08:57, 537.91s/it][A[A
+
+frankfurt_000000_020321 threshold functions:: 100%|██████████| 56/56 [5:21:41<00:00, 571.93s/it][A[Afrankfurt_000000_020321 threshold functions:: 100%|██████████| 56/56 [5:21:41<00:00, 344.66s/it]
+
+frankfurt_000000_020321:  20%|██        | 1/5 [5:41:14<22:44:57, 20474.41s/it][A
+
+0it [00:00, ?it/s][A[A
+
+1it [00:05,  5.15s/it][A[A
+
+2it [00:10,  5.10s/it][A[A
+
+3it [00:15,  5.05s/it][A[A
+
+4it [00:20,  5.01s/it][A[A4it [00:20,  5.04s/it]
+
+
+frankfurt_000000_020321 threshold functions::   0%|          | 0/56 [00:00<?, ?it/s][A[A
+
+frankfurt_000000_020321 threshold functions::   2%|▏         | 1/56 [00:37<33:57, 37.04s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   4%|▎         | 2/56 [01:40<47:17, 52.54s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   5%|▌         | 3/56 [03:10<1:01:44, 69.89s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   7%|▋         | 4/56 [05:19<1:20:43, 93.14s/it][A[A
+
+frankfurt_000000_020321 threshold functions::   9%|▉         | 5/56 [08:03<1:40:41, 118.46s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  11%|█         | 6/56 [16:47<3:33:50, 256.61s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  12%|█▎        | 7/56 [17:51<2:37:59, 193.47s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  14%|█▍        | 8/56 [19:21<2:08:34, 160.72s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  16%|█▌        | 9/56 [21:30<1:58:06, 150.79s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  18%|█▊        | 10/56 [24:14<1:58:42, 154.83s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  20%|█▉        | 11/56 [32:59<3:20:57, 267.94s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  21%|██▏       | 12/56 [34:29<2:36:51, 213.91s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  23%|██▎       | 13/56 [36:38<2:14:53, 188.22s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  25%|██▌       | 14/56 [39:21<2:06:29, 180.71s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  27%|██▋       | 15/56 [48:05<3:14:00, 283.91s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  29%|██▊       | 16/56 [50:14<2:38:13, 237.33s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  30%|███       | 17/56 [52:57<2:19:44, 214.98s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  32%|███▏      | 18/56 [1:01:42<3:15:11, 308.21s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  34%|███▍      | 19/56 [1:04:25<2:43:12, 264.65s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  36%|███▌      | 20/56 [1:13:08<3:25:23, 342.32s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  38%|███▊      | 21/56 [1:21:52<3:51:20, 396.59s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  39%|███▉      | 22/56 [1:22:55<2:48:02, 296.54s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  41%|████      | 23/56 [1:24:26<2:09:09, 234.82s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  43%|████▎     | 24/56 [1:26:34<1:48:15, 202.97s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  45%|████▍     | 25/56 [1:29:17<1:38:38, 190.93s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  46%|████▋     | 26/56 [1:38:02<2:25:31, 291.05s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  48%|████▊     | 27/56 [1:39:32<1:51:35, 230.87s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  50%|█████     | 28/56 [1:41:41<1:33:26, 200.25s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  52%|█████▏    | 29/56 [1:44:25<1:25:10, 189.28s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  54%|█████▎    | 30/56 [1:53:09<2:05:35, 289.82s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  55%|█████▌    | 31/56 [1:55:18<1:40:36, 241.46s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  57%|█████▋    | 32/56 [1:58:01<1:27:14, 218.12s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  59%|█████▉    | 33/56 [2:06:46<1:58:47, 309.90s/it][A[A
+
+frankfurt_000000_020321 threshold functions::  61%|██████    | 34/56 [2:09:28<1:37:27, 265.80s/it][A[Aslurmstepd-gpu20-11: error: *** JOB 21238549 ON gpu20-11 CANCELLED AT 2023-09-07T05:40:02 DUE TO TIME LIMIT ***

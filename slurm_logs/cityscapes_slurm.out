@@ -1,0 +1,58 @@
+1
+GPU0, job 1: Initializing model
+GPU0, job 1: Initializing datasets
+Initializing CityScapes dataset with 100 samples
+Job (1/1): Splitting dataset into 1 chunks of size 100. Range [0, 100] 
+GPU0, job 1: Initializing writer
+Using temprature = 1.3353227376937866
+sample
+remaining: 1
+before concatenate
+after concatenate
+end of sample
+(1024, 2048, 3) (4, 1024, 2048)
+before get_samples
+GPU0, job 1: Generating 500 samples for frankfurt_000000_020321
+sample
+remaining: 500
+remaining: 484
+remaining: 468
+remaining: 452
+remaining: 436
+remaining: 420
+remaining: 404
+remaining: 388
+remaining: 372
+remaining: 356
+remaining: 340
+remaining: 324
+remaining: 308
+remaining: 292
+remaining: 276
+remaining: 260
+remaining: 244
+remaining: 228
+remaining: 212
+remaining: 196
+remaining: 180
+remaining: 164
+remaining: 148
+remaining: 132
+remaining: 116
+remaining: 100
+remaining: 84
+remaining: 68
+remaining: 52
+remaining: 36
+remaining: 20
+remaining: 4
+before concatenate
+after get_samples
+before samples.reshape(n, -1).copy()
+before to_hierarchies
+after to_hierarchies
+Using 56 threshold functions.
+before samples.reshape(n, -1).copy()
+before to_hierarchies
+after to_hierarchies
+Using 56 threshold functions.
