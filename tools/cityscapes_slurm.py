@@ -42,7 +42,10 @@ from scipy import stats
 import matplotlib.pyplot as plt
 # adaptive certify utils
 from torch.utils.data.distributed import DistributedSampler
+from os.path import dirname, abspath
 
+os.chdir(dirname(dirname(abspath(__file__))))
+print('working dir is', dirname(dirname(abspath(__file__))))
 def mode(sample):
     # for every sample in a pixel 
     c = stats.mode(sample)[0][0]
@@ -133,7 +136,7 @@ class Certifier:
         parser = ArgumentParser()
         parser = Certifier.add_argparse_args(parser)
         parser = ConfigArgumentParser(parents=[parser], add_help=False)
-        parser.add_argument("--config", default='/BS/mlcysec2/work/robust-segmentation/code/hrnet_seg/configs/cityscapes.ini', is_config_file=True)
+        parser.add_argument("--config", default='configs/cityscapes.ini', is_config_file=True)
         args, _ = parser.parse_known_args()
         with open(args.cfg) as f:
             conf = yaml.safe_load(f)
@@ -186,14 +189,14 @@ class Certifier:
         parser.add_argument('--n0', type=int, default=[10], nargs='+')
         parser.add_argument('--tau', type=float, default=0.75)
         parser.add_argument('--baseline', action="store_true") # run baseline only
-        parser.add_argument('--default_log_dir', type=str, default= '/BS/mlcysec2/work/robust-segmentation/code/hrnet_seg/cityscapes1024')
+        parser.add_argument('--default_log_dir', type=str, default= '')
         parser.add_argument('--batch_size', type=int, default=1)
         parser.add_argument('--smooth_kernel_size', default=7)
         parser.add_argument('--hierarchical', action="store_true")
         parser.add_argument('--relaxation', action="store_true")
         parser.add_argument('--smoothing', action="store_true")
         parser.add_argument('--window_size', type=int, default=5)
-        parser.add_argument('--cfg', type=str, default='/BS/mlcysec2/work/robust-segmentation/code/hrnet_seg/configs/cityscapes.yml')
+        parser.add_argument('--cfg', type=str, default='configs/cityscapes.yml')
         parser.add_argument('--crop', action="store_true")
         parser.add_argument('--unscaled', action="store_true")
         parser.add_argument('--name', type=str, default='')
@@ -221,9 +224,9 @@ class Certifier:
         self.testloader = testloader
 
         self.labels_dict_h = {0:'drivable', 1:'flat non-drivable', 2:'obstacle', 3:'road sign', 4:'sky', 5:'human', 6:'vehicle', 7:'abstain'}
-        self.labels_dict = pickle.load(open('/BS/mlcysec2/work/robust-segmentation/code/hrnet_seg/data/cityscapes_trainIds.pkl', 'rb'))
+        self.labels_dict = pickle.load(open('data/cityscapes_trainIds.pkl', 'rb'))
         self.labels_dict_h = {0:'drivable', 1:'flat non-drivable', 2:'obstacle', 3:'road sign', 4:'sky', 5:'human', 6:'vehicle', 7:'abstain'}
-        self.labels_dict = pickle.load(open('/BS/mlcysec2/work/robust-segmentation/code/hrnet_seg/data/cityscapes_trainIds.pkl', 'rb'))
+        self.labels_dict = pickle.load(open('data/cityscapes_trainIds.pkl', 'rb'))
         self.labels_dict[19] = 'abstain'
 
         self.labels_dict_h1 = self.labels_dict # 19
@@ -705,8 +708,8 @@ class Certifier:
         return ECE, MCE
     
     def calibrate(self, load=False):
-        if os.path.exists('/BS/mlcysec2/work/robust-segmentation/calibration/calibration_temp_cs.pkl') and load: 
-            T = pickle.load(open('/BS/mlcysec2/work/robust-segmentation/calibration/calibration_temp_cs.pkl', 'rb'))['temperature']
+        if os.path.exists('calibration/calibration_temp_cs.pkl') and load: 
+            T = pickle.load(open('calibration/calibration_temp_cs.pkl', 'rb'))['temperature']
             return T
         self.steps = 0
         self.model.eval()

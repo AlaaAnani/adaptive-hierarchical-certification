@@ -11,7 +11,7 @@ AUTO_RESUME: true
 
 DATASET:
   DATASET: cityscapes
-  ROOT: 'code/hrnet_seg/data/'
+  ROOT: 'data/'
   TEST_SET: 'list/cityscapes/val.lst'
   TRAIN_SET: 'list/cityscapes/train.lst'
   NUM_CLASSES: 19
@@ -99,5 +99,5 @@ TEST:
   BASE_SIZE: 2048
   BATCH_SIZE_PER_GPU: 16
   MULTI_SCALE: false
-  MODEL_FILE: /BS/mlcysec/work/robust-segmentation/code/hrnet_seg/models/cityscapes.pth
+  MODEL_FILE: models/cityscapes.pth
   SCALE_LIST: [1]
