@@ -11,7 +11,6 @@ from configargparse import ArgumentParser as ConfigArgumentParser
 import torch.nn as nn
 
 from argparse import ArgumentParser
-import torchvision
 
 import _init_paths
 import models
@@ -130,7 +129,7 @@ class Certifier:
         
         #self.test_calibration()
 
-        self.main_skeleton()
+        self.main_skeleton_table()
 
     def parse_args(self):
         parser = ArgumentParser()
@@ -421,16 +420,16 @@ class Certifier:
         # edge_map = edge_map[non_ignore_idx]
         return name, image_np01, baseline_pred, size, labels_h, non_ignore_idx, edge_map, label, baseline_logits
     
-    def fast_certify(self, samples_flattened, n0, n):
+    def fast_certify(self, samples_flattened, n0, n, tau=0.75):
         modes, _ = torch.mode(samples_flattened[:n0], 0)
         counts_at_modes = (samples_flattened[n0:] == modes.unsqueeze(0)).sum(0)
-        pvals_ = binom_test(np.array(counts_at_modes), np.array([n-n0]*len(samples_flattened[0])), np.array([self.tau]*len(samples_flattened[0])), alt='greater')
+        pvals_ = binom_test(np.array(counts_at_modes), np.array([n-n0]*len(samples_flattened[0])), np.array([tau]*len(samples_flattened[0])), alt='greater')
         abstain = pvals_ > self.alpha/len(samples_flattened[0])
         modes = modes.cpu().numpy()
         modes[np.array(abstain)] = 19
         return modes
     
-    def get_samples(self, image_np01, n, size, name, fresh=True):
+    def get_samples(self, image_np01, n, size, name, sigma=0.25, fresh=True):
         try:
             if fresh:
                 raise Exception
@@ -439,7 +438,7 @@ class Certifier:
             self.log(f'Loading cached sample {name}')
         except:
             self.log(f'Generating {n} samples for {name}')
-            _, logits = self.sample(image_np01, size, n, sigma = self.sigma, posteriors=True, cuda_id=self.rank, do_tqdm=True)
+            _, logits = self.sample(image_np01, size, n, sigma = sigma, posteriors=True, cuda_id=self.rank, do_tqdm=True)
             # pickle.dump(logits, open(f'{self.default_log_dir}/cached_samples/{name}_{self.max_n}_logits.pkl', 'wb'), protocol=4)
         return logits[:n]
     
@@ -455,9 +454,10 @@ class Certifier:
 
         return info_gain, c_ig_map
     
-    def fill_stats_h(self, stats, name, n, n0, i, classes_certify, label_i, non_ignore_idx, edge_map):
+    def fill_stats_h(self, stats, name, n, n0, i, classes_certify, label_i, non_ignore_idx, edge_map, k=None):
         c_idx = classes_certify != 19 
-        k = (n, n0, None, i)
+        if k is None:
+            k = (n, n0, None, i)
         stats[name][k] = {}
         c_ig, c_ig_map = self.info_gain(i, classes_certify, label_i, non_ignore_idx)
         stats[name][k]['c_info_gain'] = c_ig
@@ -793,9 +793,7 @@ class Certifier:
         stats = {}
         with torch.no_grad():
             for batch in tqdm(self.testloader, desc='Main Loop'):
-                if self.steps < self.args.N0: self.steps +=1; continue
-                if self.steps >= self.args.N: break
-
+                if self.steps <=2: self.steps+=1; continue
                 name, image_np01, baseline_pred, size, labels_h, non_ignore_idx, edge_map, label, baseline_logits = self.process_precertify(batch, posteriors=False)
                 baseline_pred = baseline_pred[0]
 
@@ -805,7 +803,7 @@ class Certifier:
 
                 #for n in list(reversed(sorted(self.n))):
                 #  
-                for n in tqdm(list(reversed(sorted([100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]))), desc=f'{name}'):
+                for n in tqdm(list(reversed(sorted([100, 300, 500, 700, 900]))), desc=f'{name}'):
                     if samples_logits is None:
                         print('before get_samples')
                         samples_logits = self.get_samples(image_np01, n, size, name)
@@ -830,7 +828,120 @@ class Certifier:
                 pickle.dump(stats, open(os.path.join(stats_dir, f'{name}.pkl'), 'wb'), protocol=pickle.HIGHEST_PROTOCOL)
                 print(f'Saving {os.path.join(stats_dir, f"{name}.pkl")}')
                 self.steps +=1
+    def main_skeleton_table(self):
+        self.steps = 0
+        self.model.eval()
 
+        self.temperature = self.calibrate(load=True)
+        print(f'Using temprature = {self.temperature}')
+
+        stats = {}
+        with torch.no_grad():
+            for batch in tqdm(self.testloader, desc='Main Loop'):
+                if self.steps <10: self.steps+=1; continue
+                name, image_np01, baseline_pred, size, labels_h, non_ignore_idx, edge_map, label, baseline_logits = self.process_precertify(batch, posteriors=False)
+                baseline_pred = baseline_pred[0]
+
+                samples, samples_logits = None, None
+                print(image_np01.shape, labels_h.shape)
+                stats[name] = {}
+
+                #for n in list(reversed(sorted(self.n))):
+                #  
+                k = (None, None, None, 0, None, None)
+                if k not in stats[name]:
+                    stats[name][k] = {}
+                stats[name][k]['uncertified_pos'] = (baseline_pred == label.cpu().numpy()).sum()
+                stats[name][k]['num_pixels'] = non_ignore_idx.sum()
+
+                for sigma in tqdm([0.25, 0.33, 0.50], desc='sigma'):
+                    for n in tqdm(list(reversed(sorted([100, 500]))), desc=f'{name}'):
+                        if n==100: tau=0.75
+                        if n==500: tau=0.95
+                        
+                        if samples_logits is None:
+                            print('before get_samples')
+                            samples_logits = self.get_samples(image_np01, n, size, name, sigma=sigma)
+                            samples = samples_logits.argmax(1)#.copy()
+
+                            samples_logits = samples_logits/self.temperature # for calibration
+                            print('after get_samples')
+
+                        else:
+                            samples, samples_logits = samples[0:n], samples_logits[0:n]
+
+                        samples_flattened = samples.reshape(n, -1).copy() # (N, w*h)
+                        samples_flattened_h = self.to_hierarchies(torch.tensor(samples_flattened).clone().unsqueeze(0).detach())
+
+                        # run experiment per n
+                        stats_dir, stats = self.exp_table(name, stats,
+                                        samples_flattened,
+                                        samples_flattened_h, labels_h, 
+                                        non_ignore_idx, edge_map,
+                                        samples_logits,
+                                        label, baseline_pred,
+                                        sigma,
+                                        tau)
+                    samples_logits = None
+
+                pickle.dump(stats, open(os.path.join(stats_dir, f'{name}.pkl'), 'wb'), protocol=pickle.HIGHEST_PROTOCOL)
+                print(f'Saving {os.path.join(stats_dir, f"{name}.pkl")}')
+                self.steps +=1
+
+    def exp_table(self, name, stats,
+                    samples_flattened,
+                    samples_flattened_h, labels_h, 
+                    non_ignore_idx, edge_map,
+                    samples_logits,
+                    label, baseline_pred, sigma, tau):
+        stats_dir = f'{self.default_log_dir}/slurm_logs/table/'
+        os.makedirs(stats_dir, exist_ok=True)
+        n, _ = samples_flattened.shape
+
+
+        n0=10; N0=n0
+        i = 0
+        # SegCertify at different hierarchies
+        for s_i, label_i in tqdm(zip(samples_flattened_h, labels_h), desc='SegCertify'):
+            classes_certify = self.fast_certify(s_i, n0, n, tau=tau)
+            
+            label_i = label_i.flatten()
+            stats = self.fill_stats_h(stats, name, n, N0, i, classes_certify, label_i, non_ignore_idx, edge_map, k=(n, n0, None, i, sigma, tau))
+            i+=1
+        # i = 4 --> adaptive
+        posteriors = F.softmax(torch.tensor(samples_logits[:n0]), dim=1).cpu().numpy()
+        diff, _ = self.get_difference(posteriors[:n0])
+        from itertools import permutations
+        def get_threshold_permutations(l):
+            x_sorted = []
+            x = list(permutations(l, 3))
+            for f in x:
+                if np.all(np.diff(f) >= 0):
+                    x_sorted.append(f)
+            return x_sorted
+        th_functions = get_threshold_permutations([0, 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3])
+        print(f'Using {len(th_functions)} threshold functions.')
+        for f in tqdm([(0, 0, 0.25)], desc=f'{name} threshold functions:'):
+            th_func_name = str(f)
+            samples_flattened_adaptive, h_map = self.adapt_to_hierarchies(samples_flattened.copy(), diff, th_func_name, f, n)
+            classes_certify = self.fast_certify(torch.tensor(samples_flattened_adaptive), n0, n, tau=tau).copy()
+            stats_h = self.hierarchical_certified_accuracy(classes_certify.copy(), h_map, labels_h.reshape(labels_h.shape[0], -1), self.get_edgemap(copy.deepcopy(label).cpu().numpy(), 20, 255).flatten())
+            ig_adaptive, ig_map = self.info_gain_adaptive(classes_certify, h_map, labels_h)
+            # get adaptive baseline
+            ig_per_class_dict = self.ig_per_class(ig_map, h_map, classes_certify, labels_h, non_ignore_idx) # verified
+            label__ = np.reshape(np.array(label).flatten()[non_ignore_idx], (1, -1))
+            baseline_pred__ = np.reshape(np.array(baseline_pred).flatten()[non_ignore_idx], (1, -1))
+            label_adaptive, h_map = self.adapt_to_hierarchies(label__, diff.flatten()[non_ignore_idx])
+            baseline_pred_adaptive, h_map = self.adapt_to_hierarchies(baseline_pred__, diff.flatten()[non_ignore_idx])
+
+            k = (n, N0, th_func_name, 4, sigma, tau)
+            stats[name][k] = stats_h
+            stats[name][k]['ig_per_class_dict'] = ig_per_class_dict
+            stats[name][k]['baseline_pos'] = (label_adaptive == baseline_pred_adaptive).sum()
+            stats[name][k]['c_info_gain'] = ig_adaptive
+            # print(i, info_gain_adaptive/non_ignore_idx.sum())
+            # print(th_func, stats[name][(n, N0, None, 0)]['c_info_gain']/non_ignore_idx.sum(), ig_adaptive/non_ignore_idx.sum())
+        return stats_dir, stats
     def exp_best_threshold_function(self, name, stats,
                                       samples_flattened,
                                       samples_flattened_h, labels_h, 
@@ -862,7 +973,7 @@ class Certifier:
                 if np.all(np.diff(f) >= 0):
                     x_sorted.append(f)
             return x_sorted
-        th_functions = get_threshold_permutations([0, 0.1, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0])
+        th_functions = get_threshold_permutations([0, 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3])
         print(f'Using {len(th_functions)} threshold functions.')
         for f in tqdm(th_functions, desc=f'{name} threshold functions:'):
             th_func_name = str(f)

@@ -97,7 +97,7 @@ TEST:
   - 2048
   - 1024
   BASE_SIZE: 2048
-  BATCH_SIZE_PER_GPU: 4
+  BATCH_SIZE_PER_GPU: 1
   MULTI_SCALE: false
   MODEL_FILE: models/cityscapes.pth
   SCALE_LIST: [1]
